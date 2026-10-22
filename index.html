@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notre Grand Road Trip américain</title>
+<style>
+:root{--sun:#ffb703;--fire:#e76f51;--sky:#219ebc;--night:#14213d;--sand:#fff4e0;--ink:#2b2d42}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS","Segoe UI",sans-serif;background:var(--sand);color:var(--ink)}
+header{background:linear-gradient(#219ebc,#8ecae6 70%,#ffd6a5);text-align:center;padding:28px 16px 70px;position:relative;overflow:hidden}
+header h1{margin:0;font-size:clamp(1.8rem,5vw,3rem);color:#fff;text-shadow:3px 3px 0 var(--night)}
+header p{margin:6px 0 0;color:var(--night);font-weight:bold}
+.sun{position:absolute;top:14px;right:8%;width:70px;height:70px;border-radius:50%;background:var(--sun);box-shadow:0 0 40px 15px #ffd166;animation:pulse 3s infinite}
+.cloud{position:absolute;font-size:3rem;animation:drift 30s linear infinite;opacity:.9}
+.road{position:absolute;bottom:0;left:0;right:0;height:34px;background:#3d3d3d;border-top:4px solid #222}
+.road::before{content:"";position:absolute;top:13px;left:0;right:0;height:5px;background:repeating-linear-gradient(90deg,#fff 0 30px,transparent 30px 60px);animation:line 1s linear infinite}
+.car{position:absolute;bottom:22px;font-size:2.6rem;animation:drive 9s linear infinite}
+@keyframes drive{from{left:-80px}to{left:100%}}
+@keyframes line{to{background-position:-60px 0}}
+@keyframes drift{from{left:-100px}to{left:110%}}
+@keyframes pulse{50%{transform:scale(1.1)}}
+nav{display:flex;justify-content:center;gap:10px;margin:-26px auto 20px;position:relative;z-index:2;padding:0 10px}
+nav button{font:inherit;font-weight:bold;font-size:1.05rem;padding:14px 22px;border:none;border-radius:40px;background:#fff;color:var(--ink);cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2);transition:.15s}
+nav button.on{background:var(--fire);color:#fff;transform:translateY(2px)}
+nav button:hover{transform:translateY(-2px)}
+main{max-width:980px;margin:auto;padding:0 14px 50px}
+.tab{display:none}.tab.on{display:block}
+.stage{background:#fff;border-radius:24px;overflow:hidden;margin-bottom:28px;box-shadow:0 8px 20px rgba(0,0,0,.12);opacity:0;transform:translateY(30px);transition:.6s}
+.stage.show{opacity:1;transform:none}
+.stage .art{height:190px;position:relative;overflow:hidden}
+.stage .art svg{width:100%;height:100%;display:block}
+.stage h2{margin:0;padding:14px 20px 0;font-size:1.5rem}
+.stage .tag{display:inline-block;margin:6px 20px 0;padding:3px 12px;border-radius:20px;background:var(--sun);font-weight:bold;font-size:.85rem}
+.days{padding:10px 20px 18px}
+.day{margin:12px 0;padding:12px 14px;border-left:6px solid var(--sky);background:#f1f9fc;border-radius:0 14px 14px 0;cursor:pointer;transition:.2s}
+.day:hover{transform:translateX(5px)}
+.day h3{margin:0;font-size:1.1rem}
+.day ul{margin:8px 0 0;padding-left:20px}
+.day li{margin:4px 0}
+.art img.hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#ddd}
+.gal{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.gal img{height:120px;flex:1 1 150px;max-width:100%;object-fit:cover;border-radius:12px;border:3px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.25);cursor:zoom-in;transition:.25s}
+.gal img:hover{transform:rotate(-1.5deg) scale(1.03)}
+.gal img.big{height:320px;flex-basis:100%;cursor:zoom-out}
+.fun{display:inline-block;animation:wob 2s infinite}
+@keyframes wob{50%{transform:rotate(15deg) scale(1.2)}}
+.tips{background:var(--night);color:#fff;border-radius:24px;padding:20px 24px}
+.tips h2{margin-top:0;color:var(--sun)}
+.tips li{margin:8px 0}
+/* SVG anims */
+.tw{animation:tw 1.5s infinite alternate}.tw:nth-child(2n){animation-delay:.5s}.tw:nth-child(3n){animation-delay:1s}
+@keyframes tw{from{opacity:.2}to{opacity:1}}
+.fnt{animation:fnt 1.4s infinite ease-in-out;transform-box:fill-box;transform-origin:bottom}
+.fnt:nth-child(2n){animation-delay:.3s}.fnt:nth-child(3n){animation-delay:.7s}
+@keyframes fnt{50%{transform:scaleY(1.5)}}
+.spin{animation:spin 12s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fly{animation:fly 9s linear infinite}
+@keyframes fly{from{transform:translateX(-60px)}to{transform:translateX(900px)}}
+.wave{animation:wave 3s ease-in-out infinite alternate}
+@keyframes wave{to{transform:translateX(-30px)}}
+.bob{animation:bob 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.sunset{animation:set 8s ease-in-out infinite alternate}
+@keyframes set{to{transform:translateY(25px)}}
+/* TODO */
+.prog{background:#fff;border-radius:20px;padding:16px 20px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,.1);position:sticky;top:6px;z-index:5}
+.bar{height:18px;border-radius:10px;background:#ddd;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--sky),var(--fire));transition:.4s}
+.sec{background:#fff;border-radius:20px;padding:6px 20px 14px;margin-bottom:18px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.sec h2{font-size:1.25rem}
+.item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed #ddd;cursor:pointer}
+.item:last-child{border:0}
+.item input{width:22px;height:22px;margin-top:2px;accent-color:var(--fire);flex:none}
+.item.done span{text-decoration:line-through;opacity:.5}
+.item b{display:block}
+.when{font-size:.8rem;background:#eee;border-radius:10px;padding:1px 8px;margin-left:6px}
+button.reset{font:inherit;margin-top:6px;padding:8px 16px;border:2px solid var(--fire);color:var(--fire);background:#fff;border-radius:20px;cursor:pointer}
+footer{text-align:center;padding:20px;color:#777}
+</style>
+</head>
+<body>
+<header>
+  <div class="sun"></div>
+  <div class="cloud" style="top:20px">☁️</div>
+  <div class="cloud" style="top:60px;animation-delay:-14s;font-size:2rem">☁️</div>
+  <h1>🌵 Grand Road Trip dans l'Ouest américain 🌵</h1>
+  <p>13 jours · 6 étapes · des canyons, des cow-boys et plein d'aventures !</p>
+  <div class="car">🚙</div>
+  <div class="road"></div>
+</header>
+
+<nav>
+  <button class="on" data-t="t1">🗺️ Le Voyage</button>
+  <button data-t="t2">✅ Préparatifs</button>
+</nav>
+
+<main>
+<!-- ONGLET 1 -->
+<section id="t1" class="tab on">
+
+<article class="stage">
+  <div class="art"><svg viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">
+    <rect width="900" height="190" fill="#1b1340"/>
+    <g fill="#fff"><circle class="tw" cx="60" cy="25" r="2"/><circle class="tw" cx="200" cy="50" r="2"/><circle class="tw" cx="380" cy="20" r="2"/><circle class="tw" cx="560" cy="45" r="2"/><circle class="tw" cx="760" cy="22" r="2"/><circle class="tw" cx="850" cy="60" r="2"/></g>
+    <circle cx="780" cy="45" r="22" fill="#fff3b0"/>
+    <g fill="#2d2a5e"><rect x="30" y="90" width="60" height="100"/><rect x="100" y="60" width="50" height="130"/><rect x="160" y="105" width="70" height="85"/><rect x="620" y="80" width="60" height="110"/><rect x="690" y="50" width="45" height="140"/><rect x="745" y="100" width="90" height="90"/></g>
+    <g fill="#ffd166"><rect class="tw" x="45" y="105" width="8" height="8"/><rect class="tw" x="65" y="130" width="8" height="8"/><rect class="tw" x="115" y="80" width="8" height="8"/><rect class="tw" x="125" y="120" width="8" height="8"/><rect class="tw" x="700" y="70" width="8" height="8"/><rect class="tw" x="710" y="110" width="8" height="8"/><rect class="tw" x="640" y="100" width="8" height="8"/></g>
+    <!-- Tour Eiffel style Paris Las Vegas -->
+    <path d="M440 190 L450 80 L460 190 Z M446 110 L454 110 M444 140 L456 140" fill="none" stroke="#ff6b6b" stroke-width="3"/>
+    <!-- bellagio fountains -->
+    <rect x="300" y="170" width="260" height="20" fill="#0b6e99"/>
+    <g fill="#8ecae6"><rect class="fnt" x="320" y="120" width="6" height="50"/><rect class="fnt" x="350" y="110" width="6" height="60"/><rect class="fnt" x="380" y="125" width="6" height="45"/><rect class="fnt" x="480" y="115" width="6" height="55"/><rect class="fnt" x="510" y="105" width="6" height="65"/><rect class="fnt" x="540" y="125" width="6" height="45"/></g>
+    <!-- volcan -->
+    <path d="M230 190 L270 140 L310 190Z" fill="#6b3b2a"/><circle class="tw" cx="270" cy="135" r="9" fill="#ff7b00"/><circle class="tw" cx="262" cy="122" r="5" fill="#ffd166"/>
+    <text x="30" y="40" font-size="30">🎰</text><text x="110" y="40" font-size="30">🎲</text><text x="580" y="40" font-size="26" class="bob">🎡</text>
+  </svg></div>
+  <h2>🎰 Étape 1 : Las Vegas, le Royaume des Lumières</h2><span class="tag">Jours 1 – 2</span>
+  <div class="days">
+    <div class="day"><h3>Jour 1 · Arrivée & prise en main</h3><ul>
+      <li>✈️ On atterrit à Las Vegas (LAS) et on récupère notre grand SUV !</li>
+      <li>🏨 Direction un hôtel de légende sur le Strip (The Venetian ou Flamingo) avec <b>d'immenses piscines</b></li>
+      <li>🛒 Petit stop chez Walmart : la glacière (20 $), de l'eau et des snacks pour la route</li></ul></div>
+    <div class="day"><h3>Jour 2 · Découvertes & spectacles</h3><ul>
+      <li>😴🏊 Matin : grasse matinée pour récupérer du décalage horaire, puis piscine !</li>
+      <li>🍫 Après-midi : balade sur le Strip, <b>M&M's World</b> (4 étages de chocolat !) et la boutique Coca-Cola</li>
+      <li>⛲🌋 Soir : le ballet des fontaines du Bellagio et l'éruption du volcan du Mirage</li></ul></div>
+  </div>
+</article>
+
+<article class="stage">
+  <div class="art"><svg viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9e5e"/><stop offset="1" stop-color="#ffd6a5"/></linearGradient></defs>
+    <rect width="900" height="190" fill="url(#g2)"/>
+    <g class="sunset"><circle cx="450" cy="70" r="34" fill="#fff1b8"/></g>
+    <rect y="150" width="900" height="40" fill="#b5532a"/>
+    <g fill="#d2691e"><path d="M40 190 L60 70 L72 40 L84 70 L110 190Z"/><path d="M150 190 L170 90 L182 55 L194 90 L225 190Z"/><path d="M280 190 L300 60 L314 25 L328 60 L360 190Z"/><path d="M420 190 L440 100 L452 70 L464 100 L495 190Z"/><path d="M560 190 L585 55 L598 20 L612 55 L640 190Z"/><path d="M690 190 L710 85 L722 50 L734 85 L770 190Z"/><path d="M810 190 L830 100 L842 65 L854 100 L885 190Z"/></g>
+    <g fill="#a0441c"><path d="M72 40 L84 70 L110 190 L90 190Z"/><path d="M314 25 L328 60 L360 190 L335 190Z"/><path d="M598 20 L612 55 L640 190 L615 190Z"/></g>
+    <text x="720" y="40" font-size="30" class="bob">🦌</text><text x="120" y="35" font-size="26" class="fly">🦅</text>
+  </svg></div>
+  <h2>🧙‍♂️ Étape 2 : Valley of Fire & Bryce Canyon</h2><span class="tag">Jour 3</span>
+  <div class="days">
+    <div class="day"><h3>Jour 3 · Des roches de feu aux cheminées de fées</h3><ul>
+      <li>🔥 Matin : Valley of Fire (1h de route) et ses roches rouge vif. On achète le pass <i>America the Beautiful</i> (80 $)</li>
+      <li>🚗 Après-midi : route vers Bryce Canyon (~2h30), installation au Ruby's Inn</li>
+      <li>🌅 Soir : Sunset Point, le grand théâtre rempli de <b>hoodoos</b>, les tours de roche magiques !</li></ul></div>
+  </div>
+</article>
+
+<article class="stage">
+  <div class="art"><svg viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">
+    <rect width="900" height="190" fill="#8ecae6"/>
+    <circle cx="120" cy="40" r="26" fill="#ffd166"/>
+    <path d="M0 190 L0 80 Q150 60 300 90 Q380 120 380 190Z M520 190 Q520 120 600 90 Q750 60 900 80 L900 190Z" fill="#d2691e"/>
+    <path d="M380 190 Q380 120 300 90 L330 90 Q450 130 450 190Z" fill="#a0441c" opacity=".4"/>
+    <path d="M380 0 Q390 110 450 130 Q520 110 520 0 L560 0 Q560 140 450 190 Q340 140 340 0Z" fill="#3aa6c9" opacity="0"/>
+    <path d="M395 190 Q400 130 450 120 Q500 130 505 190Z" fill="#1d7fa5"/>
+    <path d="M380 190 Q380 110 450 100 Q520 110 520 190" fill="none" stroke="#2fb3d9" stroke-width="22" class="wave"/>
+    <g class="wave"><path d="M0 170 Q50 160 100 170 T200 170 T300 170 T400 170 T500 170 T600 170 T700 170 T800 170 T900 170 V190 H0Z" fill="#1d7fa5" opacity=".5"/></g>
+    <text x="700" y="60" font-size="34" class="bob">🏊</text><text x="560" y="45" font-size="28">⛺</text>
+  </svg></div>
+  <h2>🌊 Étape 3 : Page, Antelope Canyon & Lac Powell</h2><span class="tag">Jours 4 – 5</span>
+  <div class="days">
+    <div class="day"><h3>Jour 4 · Descendre dans le canyon & Horseshoe Bend</h3><ul>
+      <li>🥾 Matin : rando facile (1h30) sur le Navajo Loop, au pied des tours de roche</li>
+      <li>🚗 Après-midi : route vers Page (~2h40), puis 15 min de marche jusqu'à <b>Horseshoe Bend</b>, le méandre géant du fleuve Colorado</li></ul></div>
+    <div class="day"><h3>Jour 5 · Le labyrinthe sacré & baignade</h3><ul>
+      <li>✨ Matin : visite guidée de <b>Lower Antelope Canyon</b> (10h-12h) : des rayons de lumière dans des vagues de roche dorée</li>
+      <li>🧊🥪 Après-midi : pique-nique avec la glacière, puis baignade à Lone Rock Beach, sur le lac Powell</li></ul></div>
+  </div>
+</article>
+
+<article class="stage">
+  <div class="art"><svg viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4845f"/><stop offset="1" stop-color="#ffd166"/></linearGradient></defs>
+    <rect width="900" height="190" fill="url(#g4)"/>
+    <g class="sunset"><circle cx="450" cy="95" r="45" fill="#fff3b0"/></g>
+    <rect y="150" width="900" height="40" fill="#c4562d"/>
+    <path d="M120 190 L130 80 L150 70 L185 80 L195 190Z" fill="#a8421f"/>
+    <path d="M400 190 L412 60 L425 55 L450 62 L455 190Z" fill="#a8421f"/>
+    <path d="M690 190 L700 95 L730 85 L760 98 L775 190Z" fill="#a8421f"/>
+    <text x="40" y="170" font-size="30">🌵</text><text x="560" y="175" font-size="26">🌵</text>
+    <text x="250" y="180" font-size="34" class="fly">🤠</text>
+    <text x="820" y="40" font-size="26" class="bob">🐎</text>
+  </svg></div>
+  <h2>🤠 Étape 4 : Monument Valley, au cœur du Far West</h2><span class="tag">Jour 6</span>
+  <div class="days">
+    <div class="day"><h3>Jour 6 · La piste des Indiens Navajos</h3><ul>
+      <li>🚗 Matin : route Page → Monument Valley (~2h15), en territoire Navajo</li>
+      <li>🏜️ Après-midi : la piste de terre de 17 miles (Valley Drive) au milieu des buttes rouges des films de Western… et de Lucky Luke !</li>
+      <li>🌇 Soir : nuit au View Hotel (ou en cabanon), le coucher de soleil embrase le désert</li></ul></div>
+  </div>
+</article>
+
+<article class="stage">
+  <div class="art"><svg viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">
+    <rect width="900" height="190" fill="#9bd1e8"/>
+    <path d="M0 80 L120 70 L220 110 L330 80 L460 120 L560 90 L690 115 L800 85 L900 100 V190 H0Z" fill="#e07a45"/>
+    <path d="M0 110 L100 105 L220 140 L340 115 L470 150 L580 125 L700 145 L810 120 L900 135 V190 H0Z" fill="#c0562b"/>
+    <path d="M0 150 L120 140 L260 165 L420 150 L560 170 L720 152 L900 165 V190 H0Z" fill="#8b3a1d"/>
+    <g class="fly"><text x="0" y="45" font-size="34">🦅</text></g>
+    <g class="fly" style="animation-duration:14s;animation-delay:-5s"><text x="0" y="75" font-size="22">🦅</text></g>
+    <text x="760" y="60" font-size="30" class="bob">🚁</text>
+    <text x="40" y="185" font-size="24">🫏</text>
+  </svg></div>
+  <h2>🦅 Étape 5 : Le Grand Canyon & la Route 66</h2><span class="tag">Jours 7 – 8</span>
+  <div class="days">
+    <div class="day"><h3>Jour 7 · Le précipice géant</h3><ul>
+      <li>🚗 Matin : route vers le Grand Canyon (~3h), arrivée par la tour Desert View Watchtower</li>
+      <li>🚌 Après-midi : promenade sur le bord du canyon (Rim Trail ou Hermit Road en navette gratuite)</li></ul></div>
+    <div class="day"><h3>Jour 8 · Cow-boys, ânes & diners vintage</h3><ul>
+      <li>🚁 Matin (option) : 30 minutes en hélicoptère au-dessus du Grand Canyon !</li>
+      <li>🚗🏁 Après-midi : Route 66 ! Seligman (le décor qui a inspiré <i>Cars</i>) et Oatman, où des <b>ânes sauvages</b> se baladent en liberté 🫏</li>
+      <li>🛏️ Soir : nuit dans un motel rétro à Kingman ou Needles</li></ul></div>
+  </div>
+</article>
+
+<article class="stage">
+  <div class="art"><svg viewBox="0 0 900 190" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="g6" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5ec8e5"/><stop offset="1" stop-color="#fcd5ce"/></linearGradient></defs>
+    <rect width="900" height="190" fill="url(#g6)"/>
+    <path d="M0 110 Q100 70 220 105 T440 95 T660 100 T900 80 V190 H0Z" fill="#c9a66b"/>
+    <text x="120" y="92" font-size="14" fill="#fff" font-weight="bold" letter-spacing="4" style="font-family:Impact,sans-serif">HOLLYWOOD</text>
+    <rect y="160" width="900" height="30" fill="#f4d58d"/>
+    <g class="wave"><path d="M0 175 Q40 165 80 175 T160 175 T240 175 T320 175 T400 175 T480 175 T560 175 T640 175 T720 175 T800 175 T900 175 V190 H0Z" fill="#2ec4e6"/></g>
+    <!-- grande roue -->
+    <g transform="translate(700 90)"><g class="spin"><circle r="48" fill="none" stroke="#e63946" stroke-width="4"/><path d="M-48 0H48M0 -48V48M-34 -34L34 34M34 -34L-34 34" stroke="#e63946" stroke-width="3"/><circle cx="48" r="6" fill="#ffd166"/><circle cx="-48" r="6" fill="#ffd166"/><circle cy="48" r="6" fill="#ffd166"/><circle cy="-48" r="6" fill="#ffd166"/></g><path d="M0 0L-25 98M0 0L25 98" stroke="#555" stroke-width="4"/></g>
+    <text x="30" y="170" font-size="40">🌴</text><text x="300" y="170" font-size="36">🌴</text><text x="880" y="170" font-size="36">🌴</text>
+    <text x="430" y="165" font-size="30" class="bob">🚲</text>
+    <text x="520" y="45" font-size="34" class="bob">⚡</text><text x="40" y="45" font-size="30" class="bob">🧙</text>
+    <text x="580" y="130" font-size="30" class="bob">🍄</text>
+  </svg></div>
+  <h2>🎬 Étape 6 : Los Angeles, Universal Studios & plages</h2><span class="tag">Jours 9 – 13</span>
+  <div class="days">
+    <div class="day"><h3>Jour 9 · En route pour LA & on rend la voiture</h3><ul>
+      <li>🚗 Route vers Los Angeles (~4h30)</li>
+      <li>🔑 On rend le SUV dès l'arrivée : on évite 4 jours de location et 4 nuits de parking d'hôtel. Place aux Uber !</li></ul></div>
+    <div class="day"><h3>Jour 10 · Immersion cinéma à Universal Studios</h3><ul>
+      <li>⚡ Le monde magique d'Harry Potter</li>
+      <li>🍄🏎️ La course Mario Kart au Super Nintendo World</li>
+      <li>🎥 Le Studio Tour dans les vrais décors de films</li></ul></div>
+    <div class="day"><h3>Jour 11 · Mer & fête foraine</h3><ul>
+      <li>🚲 Vélos ou rosalie sur la piste entre <b>Santa Monica Pier</b> (fête foraine sur le ponton 🎡) et Venice Beach</li></ul></div>
+    <div class="day"><h3>Jour 12 · Stars & étoiles</h3><ul>
+      <li>⭐ Hollywood Boulevard : Walk of Fame et empreintes des acteurs</li>
+      <li>🌆 Coucher de soleil à l'Observatoire Griffith, avec vue sur la ville et le panneau Hollywood</li></ul></div>
+    <div class="day"><h3>Jour 13 · Souvenirs & vol retour</h3><ul>
+      <li>🛍️ Derniers souvenirs, puis Uber jusqu'à l'aéroport LAX</li>
+      <li>✈️ Vol retour vers Paris. À bientôt l'Amérique !</li></ul></div>
+  </div>
+</article>
+
+<section class="tips stage show" style="opacity:1;transform:none">
+  <h2>💡 Les astuces des explorateurs</h2>
+  <ol>
+    <li><b>Vol multi-destinations</b> : Paris → Las Vegas, puis Los Angeles → Paris. Pas de 500 km à refaire en sens inverse.</li>
+    <li><b>Glacière Walmart</b> (20 $) : eau fraîche et pique-niques dans les aires des parcs.</li>
+    <li><b>Pass America the Beautiful</b> (80 $) : valable 1 an pour le véhicule, il couvre Bryce, le Grand Canyon et tous les parcs nationaux.</li>
+    <li><b>Voiture rendue à J9</b> : moins de stress dans les bouchons de LA et un budget préservé.</li>
+  </ol>
+</section>
+</section>
+
+<!-- ONGLET 2 -->
+<section id="t2" class="tab">
+  <div class="prog"><b>📋 Ma progression : <span id="pct">0</span>%</b> <small id="cnt"></small><div class="bar"><i id="bar"></i></div></div>
+  <div id="todo"></div>
+  <button class="reset" id="reset">Tout décocher</button>
+</section>
+</main>
+<footer>Fait avec ❤️ pour une famille d'aventuriers · 1 adulte + 2 explorateurs (10 & 12 ans)</footer>
+
+<script>
+// Onglets
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('nav button,.tab').forEach(e=>e.classList.remove('on'));
+  b.classList.add('on');document.getElementById(b.dataset.t).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});observe();
+});
+// Apparition animée
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.1});
+function observe(){document.querySelectorAll('.stage').forEach(s=>io.observe(s))}observe();
+// Jours cliquables : petit effet
+document.querySelectorAll('.day').forEach(d=>d.onclick=()=>{d.animate([{transform:'scale(1)'},{transform:'scale(1.03)'},{transform:'scale(1)'}],300)});
+
+// Photos : placez vos images dans le dossier photos/ (jpg). Si un fichier manque, l'illustration reste affichée.
+const HERO=['vegas','bryce','page','monument','grandcanyon','la'];
+const DAYPHOTOS=[
+ ['vegas-venetian,vegas-walmart','vegas-mms,vegas-bellagio,vegas-mirage'],
+ ['valleyoffire,bryce-sunsetpoint,bryce-hoodoos'],
+ ['bryce-navajoloop,horseshoebend','antelope,lonerock'],
+ ['monument-valley,monument-drive,monument-sunset'],
+ ['gc-desertview,gc-rim','gc-helicopter,route66-seligman,oatman-donkeys'],
+ ['la-road','universal-potter,universal-mario,universal-tour','santamonica,venice','hollywood-walkoffame,griffith','lax']
+];
+document.querySelectorAll('.stage:not(.tips)').forEach((st,i)=>{
+  const art=st.querySelector('.art');
+  if(art){const im=new Image();im.className='hero';im.alt='';im.loading='lazy';im.src='photos/'+HERO[i]+'.jpg';im.onerror=()=>im.remove();art.appendChild(im);}
+  st.querySelectorAll('.day').forEach((d,j)=>{
+    const names=(DAYPHOTOS[i]&&DAYPHOTOS[i][j]||'').split(',').filter(Boolean);
+    if(!names.length)return;
+    const g=document.createElement('div');g.className='gal';
+    names.forEach(n=>{const im=new Image();im.alt=n.replace(/-/g,' ');im.loading='lazy';im.src='photos/'+n+'.jpg';
+      im.onerror=()=>{im.remove();if(!g.children.length)g.remove()};
+      im.onclick=e=>{e.stopPropagation();im.classList.toggle('big')};g.appendChild(im)});
+    d.appendChild(g);
+  });
+});
+
+// Liste de tâches
+const DATA=[
+["📄 1. Formalités & papiers","À faire au plus tôt",[
+ ["Passeports","Vérifier que les 3 passeports sont valides plus de 6 mois après la date de retour."],
+ ["Demande d'ESTA","Pour l'adulte et les 2 enfants, 21 $/personne, sur esta.cbp.dhs.gov."],
+ ["Permis de conduire","Vérifier le permis français (le permis international est recommandé)."],
+ ["Banque & assurances","Prévenir la banque, augmenter les plafonds de carte, vérifier assistance et assurance santé à l'étranger."]]],
+["✈️ 2. Transports & hébergements","À réserver à l'avance",[
+ ["Vols multi-destinations","Aller Paris → Las Vegas, retour Los Angeles → Paris."],
+ ["Location de voiture","SUV pris à Las Vegas (J1), rendu à Los Angeles (J9)."],
+ ["Hôtel Las Vegas","2 nuits sur le Strip, avec piscine."],
+ ["Hôtel Bryce Canyon","1 nuit (ex : Ruby's Inn)."],
+ ["Hôtel Page / Lake Powell","2 nuits, avec piscine."],
+ ["Hôtel Monument Valley","1 nuit (The View Hotel ou cabanon)."],
+ ["Hôtel Grand Canyon","1 nuit à Tusayan ou dans le parc."],
+ ["Motel Route 66","1 nuit dans un motel rétro à Kingman ou Needles."],
+ ["Hôtel Los Angeles","4 nuits près de Santa Monica ou Hollywood."]]],
+["🎟️ 3. Parcs & activités","Les visites",[
+ ["Lower Antelope Canyon","Réserver la visite guidée en ligne plusieurs mois à l'avance (créneau 10h-12h)."],
+ ["Universal Studios Hollywood","Acheter les billets datés en ligne pour le J10."],
+ ["Pass America the Beautiful","80 $, à acheter à l'entrée du premier parc (Valley of Fire ou Bryce). Couvre toute la famille."],
+ ["Survol du Grand Canyon en hélicoptère","Optionnel : à réserver."]]],
+["🧳 4. Sur place & dans la valise","Avant le départ",[
+ ["eSIM data USA","Type Airalo ou Holafly, pour Internet, GPS et Uber."],
+ ["Cartes GPS hors-ligne","Télécharger l'Utah et l'Arizona dans Google Maps (le réseau coupe dans le désert)."],
+ ["Glacière Walmart","À acheter dès le J1 à Las Vegas (20 $)."],
+ ["Équipement rando","Gourdes isolantes, casquettes, lunettes de soleil, crème solaire pour les enfants."]]]
+];
+let state={};try{state=JSON.parse(localStorage.getItem('roadtrip')||'{}')}catch(e){}
+const box=document.getElementById('todo');
+DATA.forEach((s,si)=>{
+  const sec=document.createElement('div');sec.className='sec';
+  sec.innerHTML=`<h2>${s[0]} <span class="when">${s[1]}</span></h2>`;
+  s[2].forEach((it,ii)=>{
+    const id=si+'-'+ii;
+    const l=document.createElement('label');l.className='item';
+    l.innerHTML=`<input type="checkbox" ${state[id]?'checked':''}><span><b>${it[0]}</b>${it[1]}</span>`;
+    const c=l.querySelector('input');
+    l.classList.toggle('done',!!state[id]);
+    c.onchange=()=>{state[id]=c.checked;l.classList.toggle('done',c.checked);save()};
+    sec.appendChild(l);
+  });
+  box.appendChild(sec);
+});
+function save(){try{localStorage.setItem('roadtrip',JSON.stringify(state))}catch(e){}update()}
+function update(){
+  const all=document.querySelectorAll('#todo input'),n=[...all].filter(i=>i.checked).length;
+  const p=Math.round(n/all.length*100);
+  document.getElementById('pct').textContent=p;
+  document.getElementById('cnt').textContent=`(${n}/${all.length})`;
+  document.getElementById('bar').style.width=p+'%';
+}
+document.getElementById('reset').onclick=()=>{state={};document.querySelectorAll('#todo input').forEach(i=>{i.checked=false;i.closest('.item').classList.remove('done')});save()};
+update();
+</script>
+</body>
+</html>
